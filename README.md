@@ -54,6 +54,18 @@ touch .env
 docker-compose up -d
 ```
 
+### Собрать статику, выполнить миграции.
+
+```
+docker-compose exec backend python manage.py collectstatic
+```
+```
+docker-compose exec backend python manage.py makemigrations
+```
+```
+docker-compose exec backend python manage.py migrate
+```
+
 ## API
 
  ### Документация API.
