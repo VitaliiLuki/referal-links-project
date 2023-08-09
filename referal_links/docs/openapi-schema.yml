@@ -21,7 +21,7 @@ paths:
       - api
   /api/users/me/:
     get:
-      operationId: myProfileUser
+      operationId: Личный профиль
       description: 'Личный профиль пользователя'
       parameters: []
       responses:
@@ -34,7 +34,7 @@ paths:
       tags:
       - api
     post:
-      operationId: myProfileUser
+      operationId: Активация инвайт-кода
       description: 'Примерение инвайт-кода другого пользователя.'
       parameters:
       - name: invite_code
@@ -56,7 +56,7 @@ paths:
       - api
   /api/users/{id}/:
     get:
-      operationId: retrieveUser
+      operationId: Просмотр инфо отдельного пользователя
       description: 'Просмотр информации о конкретном пользователе'
       parameters:
       - name: id
@@ -79,7 +79,7 @@ paths:
       - api
   /api/send_auth_code:
     post:
-      operationId: createSendAuthCode
+      operationId: Запрос кода авторизации
       description: 'Запрос на получение кода авторизации.'
       parameters:
       - name: phone_number
@@ -97,7 +97,7 @@ paths:
       - api
   /api/check_phone_code:
     post:
-      operationId: createCheckPhoneAuthCode
+      operationId: Получение токена
       description: 'Запрос токена.'
       parameters:
       - name: phone_number
