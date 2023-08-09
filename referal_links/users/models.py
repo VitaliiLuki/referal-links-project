@@ -1,5 +1,5 @@
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractUser
 
 
 class UserManager(BaseUserManager):
@@ -8,7 +8,9 @@ class UserManager(BaseUserManager):
     for authentication instead of username.
     """
     def create_user(self, phone_number, password=None, **extra_fields):
-        user = self.model(phone_number, password=None, **extra_fields)
+        user = self.model(phone_number=phone_number,
+                          password=None,
+                          **extra_fields)
         if password:
             user.set_password(password)
         user.save()

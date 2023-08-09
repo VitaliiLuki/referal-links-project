@@ -1,13 +1,17 @@
-from rest_framework import views, status, mixins, viewsets
-from rest_framework.response import Response
+import time
+
+from rest_framework import mixins, status, views, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import action
-from .utils import generate_random_inv_code, generate_auth_code
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
 from users.models import Invite, User
+
 from .serializers import UserSerializer
-from .validators import (validate_auth_code, validate_phone_number,
-                         validate_invite_code)
-import time
+from .utils import generate_auth_code, generate_random_inv_code
+from .validators import (validate_auth_code, validate_invite_code,
+                         validate_phone_number)
 
 
 class RetrieveViewSet(mixins.RetrieveModelMixin,
@@ -155,6 +159,7 @@ class ProfileViewSet(RetrieveViewSet):
     @action(
         detail=False,
         methods=['GET', 'POST'],
+        permission_classes=[IsAuthenticated],
         url_path='me'
     )
     def my_profile(self, request):

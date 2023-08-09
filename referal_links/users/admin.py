@@ -1,5 +1,6 @@
 from django.contrib import admin
-from users.models import User, Invite
+
+from users.models import Invite, User
 
 
 @admin.register(User)

@@ -1,6 +1,5 @@
 import random
 
-
 CHARS = ('+-/*!&$#?=@<>abcdefghijklnopqrstuvwxyz'
          'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
 INV_CODE_LENGHT = 6
