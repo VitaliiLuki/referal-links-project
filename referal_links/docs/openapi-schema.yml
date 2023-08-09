@@ -1,21 +1,12 @@
 openapi: 3.0.2
 info:
-  title: ''
+  title: 'Referal_links_project'
   version: ''
 paths:
   /api/users/:
     get:
-      operationId: listUsers
-      description: 'Viewset for managing user profiles and invite code application.
-
-
-        This viewset provides functionality to retrieve a user profile and
-
-        apply an invite code, and also provides with list of users and detail
-
-        user''s information. User can view their own profile using a GET request,
-
-        and they can apply an invite code using a POST request.'
+      operationId: Список пользователей
+      description: 'Просмотр списка пользователей'
       parameters: []
       responses:
         '200':
@@ -31,16 +22,7 @@ paths:
   /api/users/me/:
     get:
       operationId: myProfileUser
-      description: 'Viewset for managing user profiles and invite code application.
-
-
-        This viewset provides functionality to retrieve a user profile and
-
-        apply an invite code, and also provides with list of users and detail
-
-        user''s information. User can view their own profile using a GET request,
-
-        and they can apply an invite code using a POST request.'
+      description: 'Личный профиль пользователя'
       parameters: []
       responses:
         '200':
@@ -53,28 +35,14 @@ paths:
       - api
     post:
       operationId: myProfileUser
-      description: 'Viewset for managing user profiles and invite code application.
-
-
-        This viewset provides functionality to retrieve a user profile and
-
-        apply an invite code, and also provides with list of users and detail
-
-        user''s information. User can view their own profile using a GET request,
-
-        and they can apply an invite code using a POST request.'
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/User'
+      description: 'Примерение инвайт-кода другого пользователя.'
+      parameters:
+      - name: invite_code
+        in: path
+        required: true
+        description: Инвайт код другого пользователя.
+        schema:
+          type: string
       responses:
         '201':
           content:
@@ -82,26 +50,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
+        '400':
+          description: 'Если инвайт-код не валиден, либо такого кода не существут.'
       tags:
       - api
   /api/users/{id}/:
     get:
       operationId: retrieveUser
-      description: 'Viewset for managing user profiles and invite code application.
-
-
-        This viewset provides functionality to retrieve a user profile and
-
-        apply an invite code, and also provides with list of users and detail
-
-        user''s information. User can view their own profile using a GET request,
-
-        and they can apply an invite code using a POST request.'
+      description: 'Просмотр информации о конкретном пользователе'
       parameters:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this user.
+        description: Уникальный идетификатор пользователя.
         schema:
           type: string
       responses:
@@ -110,69 +71,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-          description: ''
+          description: 'Пользователь с указанным id найден'
+        '404':
+          description: 'Пользователь с указанным id не найден'
+          
       tags:
       - api
   /api/send_auth_code:
     post:
       operationId: createSendAuthCode
-      description: 'View for sending an authentication code to a user''s phone number.
-
-
-        This view handles the process of sending an authentication code to the
-
-        provided phone number. If a user with the specified phone number already
-
-        exists, the authentication code is updated for that user. If the user
-
-        does not exist, a new user is created with a generated authentication code
-
-        and an invite code.'
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema: {}
-          application/x-www-form-urlencoded:
-            schema: {}
-          multipart/form-data:
-            schema: {}
+      description: 'Запрос на получение кода авторизации.'
+      parameters:
+      - name: phone_number
+        in: path
+        required: true
+        description: Номер телефона.
+        schema:
+          type: string
       responses:
-        '201':
-          content:
-            application/json:
-              schema: {}
-          description: ''
+        '200':
+          description: 'ОК. Получаем auth_code'
+        '400':
+          description: 'Недействительный формат номера телефона.'
       tags:
       - api
   /api/check_phone_code:
     post:
       operationId: createCheckPhoneAuthCode
-      description: 'API view for checking phone_number, authentication code and
-
-        generating an access token.
-
-
-        This view handles the process of checking whether the provided phone number
-
-        and authentication code match a user''s credentials. If the provided
-
-        credentials are valid, an access token is generated and returned.'
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema: {}
-          application/x-www-form-urlencoded:
-            schema: {}
-          multipart/form-data:
-            schema: {}
+      description: 'Запрос токена.'
+      parameters:
+      - name: phone_number
+        in: path
+        required: true
+        description: Номер телефона.
+        schema:
+          type: string
+      - name: auth_code
+        in: path
+        required: true
+        description: Код доступа.
+        schema:
+          type: string
       responses:
-        '201':
-          content:
-            application/json:
-              schema: {}
-          description: ''
+        '200':
+          description: 'OK'
+        '400':
+          description: 'Не валидный номер телефона или код.'
       tags:
       - api
 components:

@@ -9,7 +9,6 @@ services:
       - ./.env
 
   backend:
-    # image: vitaliiluki/referal_backend
     build: ../referal_links
     restart: always
     volumes:
